@@ -1,0 +1,19 @@
+all:
+  children:
+
+  nfs_servers:
+    hosts:
+      nfs:
+
+  masters:
+    hosts:
+{{ master }}
+
+  nodes:
+    hosts:
+{{ hosts }}
+
+cluster:
+  children:
+    nodes:
+    masters:

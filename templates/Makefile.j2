@@ -1,0 +1,18 @@
+setup:
+	@echo "COPY >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	scp -r ./HPC-Cluster/ root@{{ master }}.{{ site }}.grid5000.fr:/root/HPC-Cluster
+	@echo "SSH KEY >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	scp ~/.ssh/id_rsa ~/.ssh/id_rsa.pub root@{{ master }}.{{ site }}.grid5000.fr:~/.ssh/
+# 	@echo "SSH >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+# 	ssh root@chartreuse3-4.{{ site }}.grid5000.fr
+	@echo "REQUIREMENTS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	ssh root@{{ master }}.{{ site }}.grid5000.fr "apt-get update"
+	ssh root@{{ master }}.{{ site }}.grid5000.fr "apt-get install python3.11-venv python3-apt vim -y"
+# 	ssh root@tauru-1.{{ site }}.grid5000.fr "apt install python3.11-venv python3-apt vim -y"
+	@echo "CD >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	ssh root@{{ master }}.{{ site }}.grid5000.fr "python3 -m venv ~/ansible-venv && source ~/ansible-venv/bin/activate && pip install ansible"
+# 	ssh root@chartreuse3-4.{{ site }}.grid5000.fr "echo source ~/ansible-venv/bin/activate >> bash.bashrc"
+# 	@echo "VENV >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	
+# 	@echo "ACTIVATE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	ssh root@{{ master }}.{{ site }}.grid5000.fr
