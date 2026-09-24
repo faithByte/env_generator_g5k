@@ -1,18 +1,27 @@
+policy:
+	usagepolicycheck -t
+
+alloc:
+	@echo "RESERVE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	oarsub -I -t deploy -l host=5,walltime=5:00:00
+#	oarsub -I -t deploy -l {"cluster='chartreuse4'"}/host=3,walltime=12:00:00
+
+deploy:
+	@echo "DEPLOY >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	kadeploy3 debian12-min
+
 setup:
-	@echo "COPY >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	@echo "COPY PLAYBOOK >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 	scp -r ./HPC-Cluster/ root@{{ master }}.{{ site }}.grid5000.fr:/root/HPC-Cluster
 	@echo "SSH KEY >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 	scp ~/.ssh/id_rsa ~/.ssh/id_rsa.pub root@{{ master }}.{{ site }}.grid5000.fr:~/.ssh/
-# 	@echo "SSH >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-# 	ssh root@chartreuse3-4.{{ site }}.grid5000.fr
+
 	@echo "REQUIREMENTS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 	ssh root@{{ master }}.{{ site }}.grid5000.fr "apt-get update"
 	ssh root@{{ master }}.{{ site }}.grid5000.fr "apt-get install python3.11-venv python3-apt vim -y"
-# 	ssh root@tauru-1.{{ site }}.grid5000.fr "apt install python3.11-venv python3-apt vim -y"
-	@echo "CD >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+
+	@echo "ANSIBLE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 	ssh root@{{ master }}.{{ site }}.grid5000.fr "python3 -m venv ~/ansible-venv && source ~/ansible-venv/bin/activate && pip install ansible"
-# 	ssh root@chartreuse3-4.{{ site }}.grid5000.fr "echo source ~/ansible-venv/bin/activate >> bash.bashrc"
-# 	@echo "VENV >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 	
-# 	@echo "ACTIVATE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	@echo "SSH MASTER >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 	ssh root@{{ master }}.{{ site }}.grid5000.fr
