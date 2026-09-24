@@ -24,4 +24,8 @@ setup:
 	ssh root@{{ master }}.{{ site }}.grid5000.fr "python3 -m venv ~/ansible-venv && source ~/ansible-venv/bin/activate && pip install ansible"
 	
 	@echo "SSH MASTER >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-	ssh root@{{ master }}.{{ site }}.grid5000.fr
+	make master
+
+master:
+	@echo "SSH MASTER >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+	ssh root@nova-16.lyon.grid5000.fr
