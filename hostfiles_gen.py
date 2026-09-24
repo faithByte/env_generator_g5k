@@ -39,7 +39,7 @@ def	create_host_var(filename, ip):
 def	create_host_file(all):
 	template = Template(open("./templates/hosts.yml.j2").read())
 
-	all = all.rsplit('\n', 1)
+	all = all.rsplit('\n', 2)
 	output = template.render(
 		nodes=all[0],
 		master=all[1],
@@ -98,10 +98,10 @@ def	get_host_ip(site):
 		data = cursor.fetchone()
 		for index in hosts[host]:
 			# check =======================================================
-			ip_data = int(data[1].rsplit(".", 1))
-			ip = ip_data[0] + f".{index + ip_data[1]}"
+			ip_data = data[1].rsplit(".", 1)
+			ip = ip_data[0] + f".{index + int(ip_data[1])}"
 			create_host_var(f"{host}-{index}", ip)
-			all += f"      {host}-{index}:\n"
+			all += f"        {host}-{index}:\n"
 
 	if ip == None:
 		return

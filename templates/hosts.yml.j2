@@ -1,17 +1,17 @@
 all:
   children:
 
-  nfs_servers:
-    hosts:
-      nfs:
+    nfs_servers:
+      hosts:
+        nfs:
 
-  masters:
-    hosts:
+    masters:
+      hosts:
 {{ master }}
 
-  nodes:
-    hosts:
-{{ hosts }}
+    nodes:
+      hosts:
+{{ nodes }}
 
 cluster:
   children:
